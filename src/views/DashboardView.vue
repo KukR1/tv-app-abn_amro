@@ -1,0 +1,120 @@
+<script setup lang="ts">
+import { computed, ref, watch } from "vue"
+import ShowCarouselRow from "../components/ShowCarouselRow.vue"
+import ShowSearchSection from "../components/ShowSearchSection.vue"
+import { loadDashboardShows } from "../api/useDashboardShowsData"
+import { executeSearch, getSearchDebounceMs } from "../api/useShowSearchData"
+import { useShowSearch } from "../composables/useShowSearch"
+import { useShowsCache } from "../composables/useShowsCache"
+import type { GenreGroup } from "../utils/groupShowsByGenre"
+
+// Local state - fresh instance each time component mounts
+const isLoading = ref(false)
+const errorMessage = ref<string | null>(null)
+const genreGroups = ref<GenreGroup[]>([])
+
+const {
+  query: searchQuery,
+  results: searchResults,
+  isSearching,
+  errorMessage: searchErrorMessage,
+  trimmedQuery: trimmedSearchQuery,
+  resetState: resetSearchState,
+  setResults,
+  setSearching,
+  setErrorMessage,
+  clearSearch,
+} = useShowSearch()
+
+const { getCache, setCache } = useShowsCache()
+
+const isSearchFocusMode = computed(() => trimmedSearchQuery.value.length > 0)
+
+function clearActiveSearch(): void {
+  clearSearch()
+}
+
+async function loadShows(): Promise<void> {
+  isLoading.value = true
+  errorMessage.value = null
+
+  const cached = getCache()
+  const result = await loadDashboardShows(cached ?? undefined)
+
+  if (result.genreGroups) {
+    if (!cached) {
+      // Deduplicate shows by ID (shows appear in multiple genres)
+      const uniqueShows = Array.from(new Map(result.genreGroups.flatMap((group) => group.shows).map((show) => [show.id, show])).values())
+      setCache(uniqueShows)
+    }
+    genreGroups.value = result.genreGroups
+  }
+
+  if (result.error) {
+    errorMessage.value = result.error
+  }
+
+  isLoading.value = false
+}
+
+void loadShows()
+
+watch(trimmedSearchQuery, (query, _previousQuery, onCleanup) => {
+  if (!query) {
+    resetSearchState()
+    return
+  }
+
+  setSearching(true)
+  setErrorMessage(null)
+
+  const abortController = new AbortController()
+  const timeoutId = setTimeout(async () => {
+    const result = await executeSearch(query, abortController.signal)
+    if (result.shows) {
+      setResults(result.shows)
+    }
+    if (result.error) {
+      setErrorMessage(result.error)
+      setResults([])
+    }
+    if (!abortController.signal.aborted) {
+      setSearching(false)
+    }
+  }, getSearchDebounceMs())
+
+  onCleanup(() => {
+    clearTimeout(timeoutId)
+    abortController.abort()
+  })
+})
+</script>
+
+<template>
+  <section class="relative flex flex-col gap-4">
+    <button v-if="isSearchFocusMode" type="button" aria-label="Close search" class="fixed inset-0 z-10 cursor-default bg-slate-950/20 backdrop-blur-[1px]" @click="clearActiveSearch" />
+
+    <div class="relative z-20">
+      <ShowSearchSection
+        :query="searchQuery"
+        :results="searchResults"
+        :is-searching="isSearching"
+        :error-message="searchErrorMessage"
+        :is-active="isSearchFocusMode"
+        @update:query="searchQuery = $event"
+      />
+    </div>
+
+    <div class="transition duration-900" :class="isSearchFocusMode ? 'pointer-events-none select-none opacity-25 blur-[3px] saturate-50' : 'opacity-100 blur-0'">
+      <p v-if="isLoading" class="text-slate-300">Loading shows...</p>
+      <p v-else-if="errorMessage" class="text-red-200">{{ errorMessage }}</p>
+
+      <div v-else class="grid gap-5">
+        <section v-for="group in genreGroups" :key="group.genre" class="grid gap-2.5">
+          <h2 class="m-0 text-xl font-semibold text-slate-100">{{ group.genre }}</h2>
+          <ShowCarouselRow :shows="group.shows" />
+        </section>
+      </div>
+    </div>
+  </section>
+</template>
