@@ -21,7 +21,6 @@ function addShowToGenreGroup(showsByGenre: Map<string, TvMazeShow[]>, genre: str
 }
 
 function compareGenreGroupsBySize(a: GenreGroup, b: GenreGroup): number {
-  console.log(`Comparing genre groups: ${a.genre} (${a.shows.length}) vs ${b.genre} (${b.shows.length})`)
   return b.shows.length - a.shows.length
 }
 
