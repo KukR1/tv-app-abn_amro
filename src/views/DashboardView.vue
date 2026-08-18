@@ -46,7 +46,6 @@ async function loadShows(): Promise<void> {
     }
     genreGroups.value = result.genreGroups
   }
-
   if (result.error) {
     errorMessage.value = result.error
   }

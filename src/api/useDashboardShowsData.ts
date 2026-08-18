@@ -9,6 +9,7 @@ export interface DashboardShowsResult {
 }
 
 const MAX_GENRES = 10
+const MAX_SHOWS_PER_GENRE = 25
 
 function hasShows(group: GenreGroup): boolean {
   return group.shows.length > 0
@@ -17,7 +18,11 @@ function hasShows(group: GenreGroup): boolean {
 function buildGenreGroups(shows: TvMazeShow[]): GenreGroup[] {
   const groupedByGenre = groupShowsByGenre(shows)
   const nonEmptyGroups = groupedByGenre.filter(hasShows)
-  return nonEmptyGroups.slice(0, MAX_GENRES)
+  const slicedGroups = nonEmptyGroups.slice(0, MAX_GENRES)
+  const limitShowsPerGenre = slicedGroups.map((group) => {
+    return { ...group, shows: group.shows.slice(0, MAX_SHOWS_PER_GENRE) }
+  })
+  return limitShowsPerGenre
 }
 
 export async function loadDashboardShows(cachedShows?: TvMazeShow[]): Promise<DashboardShowsResult> {
