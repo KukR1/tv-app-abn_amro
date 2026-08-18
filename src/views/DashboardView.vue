@@ -8,7 +8,6 @@ import { useShowSearch } from "../composables/useShowSearch"
 import { useShowsCache } from "../composables/useShowsCache"
 import type { GenreGroup } from "../utils/groupShowsByGenre"
 
-// Local state - fresh instance each time component mounts
 const isLoading = ref(false)
 const errorMessage = ref<string | null>(null)
 const genreGroups = ref<GenreGroup[]>([])
@@ -42,10 +41,8 @@ async function loadShows(): Promise<void> {
   const result = await loadDashboardShows(cached ?? undefined)
 
   if (result.genreGroups) {
-    if (!cached) {
-      // Deduplicate shows by ID (shows appear in multiple genres)
-      const uniqueShows = Array.from(new Map(result.genreGroups.flatMap((group) => group.shows).map((show) => [show.id, show])).values())
-      setCache(uniqueShows)
+    if (!cached && result.sourceShows) {
+      setCache(result.sourceShows)
     }
     genreGroups.value = result.genreGroups
   }
