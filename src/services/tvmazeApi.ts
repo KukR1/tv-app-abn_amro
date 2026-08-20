@@ -1,6 +1,6 @@
 import type { TvMazeSearchResult, TvMazeShow } from "../types/tvmaze"
 
-const TV_MAZE_BASE_URL = "https://api.tvmaze.com"
+const TV_MAZE_BASE_URL = import.meta.env["VITE_TV_MAZE_API_URL"] || "https://api.tvmaze.com"
 
 async function fetchFromTvMaze<T>(path: string, signal?: AbortSignal): Promise<T> {
   const response = await fetch(`${TV_MAZE_BASE_URL}${path}`, { signal })
