@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref } from "vue"
-
 import type { TvMazeShow } from "../types/tvmaze"
 import { formatRating } from "../utils/showFormatters"
 
@@ -81,7 +80,7 @@ function requestHighResImage(): void {
         </div>
 
         <div class="flex flex-wrap gap-1.5">
-          <span v-for="genre in showGenreChips" :key="genre" class="rounded-full border border-slate-500 bg-slate-800/80 px-2 py-0.5 text-[10px] text-slate-100">
+          <span v-for="genre in showGenreChips" :key="genre" class="rounded-full border border-slate-500 bg-slate-800/80 px-2 py-0.5 text-[10px] text-slate-100 truncate">
             {{ genre }}
           </span>
         </div>

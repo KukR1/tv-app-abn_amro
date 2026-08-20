@@ -21,12 +21,11 @@ const emit = defineEmits<{
     class="sticky top-4 z-20 grid max-w-full min-w-0 gap-2.5 overflow-hidden rounded-xl border p-3 transition duration-200"
     :class="isActive ? 'border-sky-400/60 bg-slate-950/95 shadow-[0_18px_45px_rgba(2,6,23,0.75)] backdrop-blur-md' : 'border-slate-700 bg-slate-900/40'"
   >
-    <label for="show-search" class="text-sm font-semibold text-slate-100">Search show by name</label>
     <input
       id="show-search"
       :value="query"
       type="search"
-      placeholder="e.g. Breaking Bad"
+      placeholder="Search"
       autocomplete="off"
       class="w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2.5 text-slate-50 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-300"
       @input="emit('update:query', ($event.target as HTMLInputElement).value)"
