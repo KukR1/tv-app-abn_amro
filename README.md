@@ -5,6 +5,7 @@ A clean, responsive Vue 3 TV show dashboard built with the TVMaze API. Browse sh
 **Live demo**: https://kukr1.github.io/tv-app-abn_amro/ (GitHub Pages)
 
 ## Features
+
 - 📺 Browse shows grouped by genre with horizontal carousels
 - ⭐ Shows sorted by rating (highest first)
 - 🔍 Search shows by name with debounce
@@ -15,25 +16,25 @@ A clean, responsive Vue 3 TV show dashboard built with the TVMaze API. Browse sh
 
 ## Tech Stack
 
-**Why Vue 3 + TypeScript?**
-- Vue is what ABN AMRO uses, TypeScript prevents runtime bugs
-- Keeps code maintainable as the app grows
-
 **Why Vite?**
+
 - Fast HMR during development, lightning-quick builds
 - Plays nicely with Tailwind
 
 **Why Tailwind only?**
+
 - No extra dependencies or component libraries
 - Full control over styling
 - Responsive utilities make mobile-first easy
 
 **Testing:**
+
 - Vitest for unit tests
 - Tests cover API layer, data transformations, and state management
 - All composables and pure functions tested
 
 ## Project structure
+
 ```
 src/
 ├── api/              # Pure data functions (TVMaze API calls + data transformations)
@@ -69,11 +70,13 @@ npm run test:unit
 Deployed to GitHub Pages via GitHub Actions. Push to `main` branch and it auto-deploys.
 
 **Manual deployment:**
+
 ```bash
 npm run build
 # Deploy dist/ folder to GitHub Pages
 ```
 
 ## Node & npm versions
+
 - Node.js: v22.20.0
 - npm: 11.6.4
