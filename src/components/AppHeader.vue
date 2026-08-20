@@ -1,7 +1,6 @@
 <script setup lang="ts">
 defineProps<{
   title: string
-  description: string
 }>()
 </script>
 
@@ -10,7 +9,11 @@ defineProps<{
     <div class="flex items-start justify-between gap-4">
       <div>
         <h1>{{ title }}</h1>
-        <p>{{ description }}</p>
+        <nav class="flex gap-5">
+          <button>Browse</button>
+          <button>My List</button>
+          <button>New</button>
+        </nav>
       </div>
 
       <img

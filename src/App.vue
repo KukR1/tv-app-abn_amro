@@ -7,7 +7,7 @@ import AppLayout from "./layouts/AppLayout.vue"
   <AppLayout>
     <template #header>
       <Transition appear name="header-drop">
-        <AppHeader title="TV Maze" description="Discover top-rated shows · Explore every genre · Find your next obsession" />
+        <AppHeader title="TV Maze" />
       </Transition>
     </template>
     <RouterView />

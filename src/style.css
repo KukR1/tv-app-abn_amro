@@ -45,17 +45,13 @@ body {
   }
 }
 
-.app-header {
-  margin: 0 0 1.5rem;
-}
-
 .app-header h1 {
   margin: 0;
   font-family: "Bebas Neue", system-ui, sans-serif;
   font-size: clamp(2.8rem, 4vw + 1.5rem, 5rem);
   letter-spacing: 0.08em;
   line-height: 1;
-  background: linear-gradient(135deg, #ffffff 5%, #f3c000 25%, #004c4c 100%);
+  background: linear-gradient(90deg, #ffffff 0%, #f3c000 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -67,10 +63,49 @@ body {
   font-size: 0.9rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .app-header p {
+    display: block;
+  }
+}
+
+.app-header nav {
+  margin-top: 0.5rem;
+}
+
+.app-header nav button {
+  position: relative;
+  color: #d4d4d8;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.app-header nav button:hover {
+  color: #f3c000;
+}
+
+.app-header nav button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0.125rem;
+  width: 0;
+  background-color: #f3c000;
+  transition: width 0.2s;
+}
+
+.app-header nav button:hover::after {
+  width: 100%;
 }
 
 .app-main {
-  padding: 1rem;
+  padding: 1rem 0;
   overflow-x: hidden;
 }
 
