@@ -80,3 +80,4 @@ npm run build
 
 - Node.js: v22.20.0
 - npm: 11.6.4
+<!-- Config updated for personal account -->
