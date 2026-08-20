@@ -104,6 +104,35 @@ body {
   width: 100%;
 }
 
+.app-header nav a {
+  position: relative;
+  color: #d4d4d8;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.app-header nav a:hover {
+  color: #f3c000;
+}
+
+.app-header nav a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0.125rem;
+  width: 0;
+  background-color: #f3c000;
+  transition: width 0.2s;
+}
+
+.app-header nav a:hover::after {
+  width: 100%;
+}
+
 .app-main {
   padding: 1rem 0;
   overflow-x: hidden;

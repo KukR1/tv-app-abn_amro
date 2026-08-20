@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { RouterLink } from "vue-router"
+
 defineProps<{
   title: string
 }>()
@@ -10,9 +12,9 @@ defineProps<{
       <div>
         <h1>{{ title }}</h1>
         <nav class="flex gap-5">
-          <button>Browse</button>
-          <button>My List</button>
-          <button>New</button>
+          <RouterLink to="/">Browse</RouterLink>
+          <RouterLink to="/">My List</RouterLink>
+          <RouterLink to="/">New</RouterLink>
         </nav>
       </div>
 
