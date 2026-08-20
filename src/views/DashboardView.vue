@@ -102,12 +102,12 @@ watch(trimmedSearchQuery, (query, _previousQuery, onCleanup) => {
     </div>
 
     <div class="transition duration-900" :class="isSearchFocusMode ? 'pointer-events-none select-none opacity-25 blur-[3px] saturate-50' : 'opacity-100 blur-0'">
-      <p v-if="isLoading" class="text-slate-300">Loading shows...</p>
+      <p v-if="isLoading" class="text-green-300">Loading shows...</p>
       <p v-else-if="errorMessage" class="text-red-200">{{ errorMessage }}</p>
 
       <div v-else class="grid gap-5">
         <section v-for="group in genreGroups" :key="group.genre" class="grid gap-2.5">
-          <h2 class="m-0 text-xl font-semibold text-slate-100">{{ group.genre }}</h2>
+          <h2 class="m-0 text-xl font-semibold text-green-100">{{ group.genre }}</h2>
           <ShowCarouselRow :shows="group.shows" />
         </section>
       </div>
