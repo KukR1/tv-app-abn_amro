@@ -9,7 +9,7 @@ export interface DashboardShowsResult {
 }
 
 const MAX_GENRES = 10
-const MAX_SHOWS_PER_GENRE = 25
+export const MAX_SHOWS_PER_GENRE = 25
 
 function hasShows(group: GenreGroup): boolean {
   return group.shows.length > 0

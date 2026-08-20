@@ -20,7 +20,6 @@ function makeShow(id: number): TvMazeShow {
 
 describe("useShowsCache", () => {
   beforeEach(() => {
-    // clear between tests since the cache is module-level
     const { clearCache } = useShowsCache()
     clearCache()
   })
