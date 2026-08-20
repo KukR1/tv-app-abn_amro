@@ -37,17 +37,26 @@ async function loadShows(): Promise<void> {
   isLoading.value = true
   errorMessage.value = null
 
-  const cached = getCache()
-  const result = await loadDashboardShows(cached ?? undefined)
+  try {
+    const cached = getCache()
+    console.log("Loading shows, cached:", cached)
+    const result = await loadDashboardShows(cached ?? undefined)
+    console.log("Result:", result)
 
-  if (result.genreGroups) {
-    if (!cached && result.sourceShows) {
-      setCache(result.sourceShows)
+    if (result.genreGroups) {
+      if (!cached && result.sourceShows) {
+        setCache(result.sourceShows)
+      }
+      genreGroups.value = result.genreGroups
+      console.log("Loaded genres:", genreGroups.value.length)
     }
-    genreGroups.value = result.genreGroups
-  }
-  if (result.error) {
-    errorMessage.value = result.error
+    if (result.error) {
+      errorMessage.value = result.error
+      console.error("Error loading shows:", result.error)
+    }
+  } catch (error) {
+    console.error("Exception loading shows:", error)
+    errorMessage.value = error instanceof Error ? error.message : "Unknown error"
   }
 
   isLoading.value = false

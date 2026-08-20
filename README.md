@@ -1,39 +1,79 @@
-# TV Show Dashboard (ABN AMRO Assessment)
+# TV Show Dashboard
 
-## Why this stack
-- **Vue 3 + TypeScript**: aligns with ABN AMRO preference and improves maintainability through type safety.
-- **Vite**: fast local development and production builds.
-- **Vue Router**: supports dashboard and details route separation.
-- **Vitest**: lightweight unit test runner integrated with Vite.
+A clean, responsive Vue 3 TV show dashboard built with the TVMaze API. Browse shows by genre, sort by rating, search for your favorites, and view detailed info on each show.
 
-## Current architecture (Step 4)
-- Routing is defined in [src/router/index.ts](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/router/index.ts).
-- TVMaze domain types are in [src/types/tvmaze.ts](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/types/tvmaze.ts).
-- API access layer is in [src/services/tvmazeApi.ts](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/services/tvmazeApi.ts).
-- Genre grouping and sorting logic is in [src/utils/groupShowsByGenre.ts](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/utils/groupShowsByGenre.ts).
-- Reusable show card UI component is in [src/components/ShowCard.vue](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/components/ShowCard.vue).
-- Dashboard screen is in [src/views/DashboardView.vue](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/views/DashboardView.vue).
-- Show details screen is in [src/views/ShowDetailView.vue](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/views/ShowDetailView.vue).
-- Formatting helpers are in [src/utils/showFormatters.ts](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/utils/showFormatters.ts).
-- Dashboard search by show name uses the TVMaze search endpoint through [src/services/tvmazeApi.ts](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/services/tvmazeApi.ts).
-- Unit tests are in [src/services/tvmazeApi.test.ts](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/services/tvmazeApi.test.ts), [src/utils/groupShowsByGenre.test.ts](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/utils/groupShowsByGenre.test.ts), and [src/utils/showFormatters.test.ts](/Users/kukri/Desktop/Projects/tv-app-abn_amro/src/utils/showFormatters.test.ts).
+**Live demo**: https://kukr1.github.io/tv-app-abn_amro/ (GitHub Pages)
 
-## Environment
-- **Node.js**: `v22.20.0`
-- **npm**: `11.6.4`
+## Features
+- 📺 Browse shows grouped by genre with horizontal carousels
+- ⭐ Shows sorted by rating (highest first)
+- 🔍 Search shows by name with debounce
+- 📱 Fully responsive design (mobile + desktop)
+- 🎨 Tailwind CSS styling (no UI framework bloat)
+- ✅ 59 unit tests across all layers
+- 🚀 Auto-deployed via GitHub Actions
 
-## Run locally
+## Tech Stack
+
+**Why Vue 3 + TypeScript?**
+- Vue is what ABN AMRO uses, TypeScript prevents runtime bugs
+- Keeps code maintainable as the app grows
+
+**Why Vite?**
+- Fast HMR during development, lightning-quick builds
+- Plays nicely with Tailwind
+
+**Why Tailwind only?**
+- No extra dependencies or component libraries
+- Full control over styling
+- Responsive utilities make mobile-first easy
+
+**Testing:**
+- Vitest for unit tests
+- Tests cover API layer, data transformations, and state management
+- All composables and pure functions tested
+
+## Project structure
+```
+src/
+├── api/              # Pure data functions (TVMaze API calls + data transformations)
+├── services/         # Low-level API wrappers
+├── composables/      # Vue state holders (no side effects)
+├── views/            # Page components (DashboardView, ShowDetailView)
+├── components/       # Reusable UI (ShowCard, ShowCarouselRow, etc)
+├── utils/            # Pure helpers (grouping, formatting)
+├── types/            # TypeScript interfaces
+└── __tests__/        # Unit tests mirror src structure
+```
+
+## Setup & Run
+
+**Requirements:** Node.js 20+
+
 ```bash
+# Install dependencies
 npm install
+
+# Dev server (http://localhost:5173)
 npm run dev
-```
 
-## Build
-```bash
+# Build for production
 npm run build
-```
 
-## Unit tests
-```bash
+# Run tests
 npm run test:unit
 ```
+
+## Deployment
+
+Deployed to GitHub Pages via GitHub Actions. Push to `main` branch and it auto-deploys.
+
+**Manual deployment:**
+```bash
+npm run build
+# Deploy dist/ folder to GitHub Pages
+```
+
+## Node & npm versions
+- Node.js: v22.20.0
+- npm: 11.6.4
