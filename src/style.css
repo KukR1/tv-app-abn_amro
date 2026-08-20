@@ -11,8 +11,8 @@
     sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #f0f0f0;
-  background-color: #0d3d42;
+  color: #ffffff;
+  background-color: #0a1f1f;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -26,7 +26,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(circle at top, #00594a, #0d3d42 60%);
+  background: #0f0f0f;
 }
 
 #app {
@@ -55,7 +55,7 @@ body {
   font-size: clamp(2.8rem, 4vw + 1.5rem, 5rem);
   letter-spacing: 0.08em;
   line-height: 1;
-  background: linear-gradient(135deg, #ffffff 30%, #ffd700 70%, #00c875 100%);
+  background: linear-gradient(135deg, #ffffff 5%, #f3c000 25%, #004c4c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -63,16 +63,13 @@ body {
 
 .app-header p {
   margin: 0.4rem 0 0;
-  color: #a8d5d0;
+  color: #b3d9d9;
   font-size: 0.9rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .app-main {
-  border: 1px solid #00a86b;
-  border-radius: 0.75rem;
-  background: rgb(13 61 66 / 0.65);
   padding: 1rem;
   overflow-x: hidden;
 }
