@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue"
 import { RouterLink, useRoute } from "vue-router"
-
 import { loadShowDetailsById } from "../api/useShowDetailsData"
 import type { TvMazeShow } from "../types/tvmaze"
 import { formatRating, formatValue, stripHtmlTags } from "../utils/showFormatters"

@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router"
-
 import type { TvMazeShow } from "../types/tvmaze"
 import ShowCard from "./ShowCard.vue"
 
-defineProps<{
+const props = defineProps<{
   query: string
   results: TvMazeShow[]
   isSearching: boolean
@@ -20,11 +19,7 @@ const emit = defineEmits<{
 <template>
   <section
     class="sticky top-4 z-20 grid max-w-full min-w-0 gap-2.5 overflow-hidden rounded-xl border p-3 transition duration-200"
-    :class="
-      isActive
-        ? 'border-sky-400/60 bg-slate-950/95 shadow-[0_18px_45px_rgba(2,6,23,0.75)] backdrop-blur-md'
-        : 'border-slate-700 bg-slate-900/40'
-    "
+    :class="isActive ? 'border-sky-400/60 bg-slate-950/95 shadow-[0_18px_45px_rgba(2,6,23,0.75)] backdrop-blur-md' : 'border-slate-700 bg-slate-900/40'"
   >
     <label for="show-search" class="text-sm font-semibold text-slate-100">Search show by name</label>
     <input
@@ -41,15 +36,8 @@ const emit = defineEmits<{
     <p v-else-if="errorMessage" class="text-sm text-red-200">{{ errorMessage }}</p>
     <p v-else-if="query.trim() && results.length === 0" class="text-sm text-slate-300">No shows found.</p>
 
-    <div
-      v-if="results.length > 0"
-      class="max-w-full min-w-0 overflow-hidden rounded-xl border border-slate-800/80 bg-slate-900/60 p-3"
-    >
-      <TransitionGroup
-        name="card-pop"
-        tag="div"
-        class="flex max-w-full min-w-0 gap-3 overflow-x-auto overflow-y-hidden px-0.5 py-2 [scrollbar-color:#475569_transparent]"
-      >
+    <div v-if="results.length > 0" class="max-w-full min-w-0 overflow-hidden rounded-xl border border-slate-800/80 bg-slate-900/60 p-3">
+      <TransitionGroup name="card-pop" tag="div" class="flex max-w-full min-w-0 gap-3 overflow-x-auto overflow-y-hidden px-0.5 py-2 [scrollbar-color:#475569_transparent]">
         <RouterLink
           v-for="(show, index) in results"
           :key="show.id"
