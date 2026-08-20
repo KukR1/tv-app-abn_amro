@@ -11,6 +11,7 @@ const showId = computed(() => Number(route.params["id"]))
 const isLoading = ref(false)
 const errorMessage = ref<string | null>(null)
 const show = ref<TvMazeShow | null>(null)
+const imageLoaded = ref(false)
 
 const summary = computed(() => stripHtmlTags(show.value?.summary ?? null))
 const showImage = computed(() => show.value?.image?.original ?? "https://placehold.co/500x720/1e293b/e2e8f0?text=No+Image")
@@ -18,10 +19,15 @@ const genreList = computed(() => show.value?.genres.join(", ") || "Unknown")
 
 async function loadShow(id: number): Promise<void> {
   isLoading.value = true
+  imageLoaded.value = false
   const result = await loadShowDetailsById(id)
   show.value = result.show
   errorMessage.value = result.errorMessage
   isLoading.value = false
+}
+
+function handleImageLoad(): void {
+  imageLoaded.value = true
 }
 
 void loadShow(showId.value)
@@ -41,7 +47,10 @@ watch(showId, (id) => {
     <p v-else-if="errorMessage" class="text-red-300">{{ errorMessage }}</p>
 
     <article v-else-if="show" class="grid grid-cols-1 gap-4 rounded-lg p-4 md:grid-cols-[minmax(220px,320px)_minmax(0,1fr)] md:items-start">
-      <img :src="showImage" :alt="show.name" class="w-full max-w-80 rounded-lg" />
+      <div class="relative w-full max-w-80 overflow-hidden rounded-lg" style="aspect-ratio: 9/13">
+        <div v-if="!imageLoaded" class="absolute inset-0 bg-neutral-700 animate-pulse" />
+        <img :src="showImage" :alt="show.name" class="h-full w-full object-cover transition-opacity duration-500" :class="imageLoaded ? 'opacity-100' : 'opacity-0'" @load="handleImageLoad" />
+      </div>
 
       <div>
         <h2 class="m-0 text-[clamp(1.4rem,2vw+0.8rem,2rem)] font-semibold text-white">{{ show.name }}</h2>
