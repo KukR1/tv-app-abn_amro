@@ -2,6 +2,7 @@
 import { computed, ref, watch } from "vue"
 import { RouterLink, useRoute } from "vue-router"
 import { loadShowDetailsById } from "../api/useShowDetailsData"
+import { useWatchlist } from "../composables/useWatchlist"
 import type { TvMazeShow } from "../types/tvmaze"
 import { formatRating, formatValue, stripHtmlTags } from "../utils/showFormatters"
 
@@ -12,6 +13,8 @@ const isLoading = ref(false)
 const errorMessage = ref<string | null>(null)
 const show = ref<TvMazeShow | null>(null)
 const imageLoaded = ref(false)
+
+const { isInWatchlist, toggleShow } = useWatchlist()
 
 const summary = computed(() => stripHtmlTags(show.value?.summary ?? null))
 const showImage = computed(() => show.value?.image?.original ?? "https://placehold.co/500x720/1e293b/e2e8f0?text=No+Image")
@@ -53,8 +56,15 @@ watch(showId, (id) => {
       </div>
 
       <div>
-        <h2 class="m-0 text-[clamp(1.4rem,2vw+0.8rem,2rem)] font-semibold text-white">{{ show.name }}</h2>
-        <p class="text-neutral-300">⭐ {{ formatRating(show.rating.average) }} · {{ formatValue(show.language) }} · {{ genreList }}</p>
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex-1">
+            <h2 class="m-0 text-[clamp(1.4rem,2vw+0.8rem,2rem)] font-semibold text-white">{{ show.name }}</h2>
+            <p class="text-neutral-300">⭐ {{ formatRating(show.rating.average) }} · {{ formatValue(show.language) }} · {{ genreList }}</p>
+          </div>
+          <button @click="toggleShow(show.id)" class="mt-1 text-3xl hover:scale-125 cursor-pointer transition" :aria-label="isInWatchlist(show.id) ? 'Remove from watchlist' : 'Add to watchlist'">
+            {{ isInWatchlist(show.id) ? "★" : "☆" }}
+          </button>
+        </div>
 
         <dl class="my-3 grid gap-2.5 md:grid-cols-3">
           <div class="rounded-lg border border-neutral-700 bg-neutral-900/30 p-2.5">

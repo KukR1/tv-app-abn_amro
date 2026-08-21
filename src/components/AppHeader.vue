@@ -13,7 +13,7 @@ defineProps<{
         <h1>{{ title }}</h1>
         <nav class="flex gap-5">
           <RouterLink to="/">Browse</RouterLink>
-          <RouterLink to="/">My List</RouterLink>
+          <RouterLink to="/my-list">My List</RouterLink>
           <RouterLink to="/">New</RouterLink>
         </nav>
       </div>
