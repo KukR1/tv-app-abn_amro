@@ -9,9 +9,11 @@ A clean, responsive Vue 3 TV show dashboard built with the TVMaze API. Browse sh
 - 📺 Browse shows grouped by genre with horizontal carousels
 - ⭐ Shows sorted by rating (highest first)
 - 🔍 Search shows by name with debounce
+- ❤️ Add/remove shows to personal watchlist (My List)
+- 💾 Watchlist persists across sessions (localStorage)
 - 📱 Fully responsive design (mobile + desktop)
 - 🎨 Tailwind CSS styling (no UI framework bloat)
-- ✅ 59 unit tests across all layers
+- ✅ 81 unit tests across all layers
 - 🚀 Auto-deployed via GitHub Actions
 
 ## Tech Stack
@@ -39,13 +41,28 @@ A clean, responsive Vue 3 TV show dashboard built with the TVMaze API. Browse sh
 src/
 ├── api/              # Pure data functions (TVMaze API calls + data transformations)
 ├── services/         # Low-level API wrappers
-├── composables/      # Vue state holders (no side effects)
-├── views/            # Page components (DashboardView, ShowDetailView)
+├── composables/      # Vue state holders (useWatchlist, useShowSearch, etc)
+├── views/            # Page components (DashboardView, ShowDetailView, MyListView)
 ├── components/       # Reusable UI (ShowCard, ShowCarouselRow, etc)
 ├── utils/            # Pure helpers (grouping, formatting)
 ├── types/            # TypeScript interfaces
 └── __tests__/        # Unit tests mirror src structure
 ```
+
+## Key Features Explained
+
+### Watchlist (My List)
+
+- Click the star icon (☆/★) on any show to add/remove from watchlist
+- Access saved shows from "My List" menu
+- Favorites persist via localStorage (survives page reloads)
+- Reactive UI - star updates instantly when toggled
+
+### Search
+
+- Type to search shows by name
+- Debounced to minimize API calls
+- Results update in real-time below the search box
 
 ## Setup & Run
 
@@ -80,4 +97,3 @@ npm run build
 
 - Node.js: v22.20.0
 - npm: 11.6.4
-<!-- Config updated for personal account -->
